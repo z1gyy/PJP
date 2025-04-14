@@ -4,9 +4,8 @@ using System.IO;
 using System.Threading;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using pjpproject;
 
-namespace MyNamespace
+namespace pjpproject
 {
     class Program
     {
@@ -14,7 +13,7 @@ namespace MyNamespace
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
-            var fileName = "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\input.txt";
+            var fileName = "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\input.txt";
 
             if (!File.Exists(fileName))
             {
@@ -25,20 +24,23 @@ namespace MyNamespace
             try
             {
                 using var inputFile = new StreamReader(fileName);
-                AntlrInputStream input = new AntlrInputStream(inputFile);
-                PLCLexer lexer = new PLCLexer(input);
-                CommonTokenStream tokens = new CommonTokenStream(lexer);
-                PLCParser parser = new PLCParser(tokens);
+                var input = new AntlrInputStream(inputFile);
+                var lexer = new PLCLexer(input);
+                var tokens = new CommonTokenStream(lexer);
+                var parser = new PLCParser(tokens);
 
                 var errorListener = new VerboseListener();
                 parser.RemoveErrorListeners();
                 parser.AddErrorListener(errorListener);
 
-                IParseTree tree = parser.program();
+                var tree = parser.program();
 
                 if (parser.NumberOfSyntaxErrors == 0)
                 {
                     Console.WriteLine("✅ Bez syntax erroru");
+
+                    var visitor = new TypeCheckerVisitor();
+                    visitor.Visit(tree);
 
                     if (Errors.NumberOfErrors != 0)
                     {

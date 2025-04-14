@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\pjpproject.csproj": {}
+    "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\pjpproject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\pjpproject.csproj": {
+    "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\pjpproject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\pjpproject.csproj",
+        "projectUniqueName": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\pjpproject.csproj",
         "projectName": "pjpproject",
-        "projectPath": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\pjpproject.csproj",
+        "projectPath": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\pjpproject.csproj",
         "packagesPath": "C:\\Users\\Žigy-san\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\obj\\",
+        "outputPath": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

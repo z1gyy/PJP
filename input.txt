@@ -1,20 +1,9 @@
-int x, y
-float z;
-
-read x, y, ;          // chyba: čárka bez následující proměnné
-
-write 1 + * 2;        // chyba: operátor * bez levého operandu
-
-if (x > 5)            // chyba: chybí tělo if
-else 
-    write x;
-
-while x < 10) {       // chyba: chybějící levá závorka
-    x = x + 1;
-}
-
-string name = "John   // chyba: neukončený string
-
-int 1var;             // chyba: neplatný název proměnné
-
-{ int a; a = 10       // chyba: chybějící středník na konci přiřazení
+int;                    // chyba: chybí název proměnné
+float 3x;               // chyba: neplatný identifikátor
+x = y * ;               // chyba: chybějící operand
+if (true) write "ok";   // chyba: chybí složené závorky kolem příkazu
+else write "bad";       // chyba: else bez if bloku
+read x y;               // chyba: chybí čárka
+name = "John            // chyba: neukončený string
+= 42;                   // chyba: chybí proměnná vlevo
+write 1 + ;             // chyba: chybějící operand
