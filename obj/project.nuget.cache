@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "wni7NtYH3jc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Žigy-san\\Downloads\\pjp-main (1)\\pjp-main\\pjpproject.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Žigy-san\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512"
+  ],
+  "logs": []
+}
