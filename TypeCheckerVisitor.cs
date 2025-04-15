@@ -242,5 +242,10 @@ namespace pjpproject
             Errors.ReportError(context.Start, $"Operator '{op}' requires boolean operands.");
             return PType.Error;
         }
+
+        public override PType VisitParenExpr(PLCParser.ParenExprContext context)
+        {
+            return Visit(context.expression());
+        }
     }
 }
