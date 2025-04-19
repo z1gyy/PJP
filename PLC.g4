@@ -15,6 +15,7 @@ statement
     | 'while' '(' expression ')' statement                   # whileStatement
     ;
 
+
 // === TYPES ===
 type: 'int' | 'float' | 'bool' | 'string';
 
@@ -27,18 +28,19 @@ exprList: expression (',' expression)*;
 // === EXPRESSIONS ===
 // Zohledňuje prioritu a asociativitu
 expression
-    : IDENT '=' expression                      # assignExpr           // right-associative
-    | expression '||' expression                # orExpr
-    | expression '&&' expression                # andExpr
-    | expression ('==' | '!=') expression       # equalityExpr
-    | expression ('<' | '>') expression         # relationalExpr
-    | expression ('+' | '-' | '.') expression   # additiveExpr
-    | expression ('*' | '/' | '%') expression   # multiplicativeExpr
-    | '!' expression                            # notExpr
-    | '-' expression                            # unaryMinusExpr
-    | '(' expression ')'                        # parenExpr
-    | literal                                   # literalExpr
-    | IDENT                                     # varExpr
+    : '!' expression                                       # notExpr    
+    | '-' expression                                       # unaryMinusExpr
+    | <assoc=left> expression ('*' | '/' | '%') expression # multiplicativeExpr   
+    | <assoc=left> expression ('+' | '-' | '.') expression # additiveExpr
+    | <assoc=left> expression ('<' | '>') expression       # relationalExpr
+    | <assoc=left> expression ('==' | '!=') expression     # equalityExpr
+    | <assoc=left> expression '&&' expression              # andExpr
+    | <assoc=left> expression '||' expression              # orExpr
+    | IDENT '=' expression                                # assignExpr
+    | '(' expression ')'                                  # parenExpr
+    | expression '<<' expression                          # novy
+    | literal                                             # literalExpr
+    | IDENT                                               # varExpr
     ;
 
 // === LITERALS ===

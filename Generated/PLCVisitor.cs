@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c:/Users/Žigy-san/Downloads/pjp-main (2)/pjp-main/PLC.g4 by ANTLR 4.13.1
+// Generated from c:/Users/Žigy-san/Downloads/pjp-main (3)/pjp-main/PLC.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -112,6 +112,34 @@ public interface IPLCVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitExprList([NotNull] PLCParser.ExprListContext context);
 	/// <summary>
+	/// Visit a parse tree produced by the <c>orExpr</c>
+	/// labeled alternative in <see cref="PLCParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOrExpr([NotNull] PLCParser.OrExprContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>additiveExpr</c>
+	/// labeled alternative in <see cref="PLCParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAdditiveExpr([NotNull] PLCParser.AdditiveExprContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>relationalExpr</c>
+	/// labeled alternative in <see cref="PLCParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitRelationalExpr([NotNull] PLCParser.RelationalExprContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>parenExpr</c>
+	/// labeled alternative in <see cref="PLCParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitParenExpr([NotNull] PLCParser.ParenExprContext context);
+	/// <summary>
 	/// Visit a parse tree produced by the <c>varExpr</c>
 	/// labeled alternative in <see cref="PLCParser.expression"/>.
 	/// </summary>
@@ -140,26 +168,12 @@ public interface IPLCVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitLiteralExpr([NotNull] PLCParser.LiteralExprContext context);
 	/// <summary>
-	/// Visit a parse tree produced by the <c>orExpr</c>
+	/// Visit a parse tree produced by the <c>novy</c>
 	/// labeled alternative in <see cref="PLCParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitOrExpr([NotNull] PLCParser.OrExprContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>additiveExpr</c>
-	/// labeled alternative in <see cref="PLCParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitAdditiveExpr([NotNull] PLCParser.AdditiveExprContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>relationalExpr</c>
-	/// labeled alternative in <see cref="PLCParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitRelationalExpr([NotNull] PLCParser.RelationalExprContext context);
+	Result VisitNovy([NotNull] PLCParser.NovyContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>assignExpr</c>
 	/// labeled alternative in <see cref="PLCParser.expression"/>.
@@ -174,13 +188,6 @@ public interface IPLCVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitMultiplicativeExpr([NotNull] PLCParser.MultiplicativeExprContext context);
-	/// <summary>
-	/// Visit a parse tree produced by the <c>parenExpr</c>
-	/// labeled alternative in <see cref="PLCParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitParenExpr([NotNull] PLCParser.ParenExprContext context);
 	/// <summary>
 	/// Visit a parse tree produced by the <c>equalityExpr</c>
 	/// labeled alternative in <see cref="PLCParser.expression"/>.

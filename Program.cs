@@ -13,7 +13,8 @@ namespace pjpproject
         {
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
-            var fileName = "C:\\Users\\Žigy-san\\Downloads\\pjp-main (2)\\pjp-main\\input.txt";
+            var fileName = "C:\\Users\\Žigy-san\\Downloads\\pjp-main (3)\\pjp-main\\input.txt";
+            var outputFileName = "C:\\Users\\Žigy-san\\Downloads\\pjp-main (3)\\pjp-main\\output.txt";
 
             if (!File.Exists(fileName))
             {
@@ -49,6 +50,22 @@ namespace pjpproject
                     else
                     {
                         Console.WriteLine("✅ Žádné sémantické chyby");
+
+                        // Zavolání CodeGenVisitor pro generování kódu
+                        var codeGenVisitor = new CodeGenVisitor();
+                        codeGenVisitor.Visit(tree);
+                        var instructions = codeGenVisitor.GetInstructions();
+
+                        Console.WriteLine("✅ Vygenerovaný kód:");
+                        foreach (var instr in instructions)
+                        {
+                            if (!string.IsNullOrWhiteSpace(instr))
+                                Console.WriteLine(instr);
+                        }
+
+                        // Uložení do output.txt
+                        File.WriteAllLines(outputFileName, instructions);
+                        Console.WriteLine($"💾 Kód uložen do souboru: {outputFileName}");
                     }
                 }
             }
