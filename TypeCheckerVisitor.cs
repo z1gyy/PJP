@@ -78,6 +78,11 @@ namespace pjpproject
             var right = Visit(context.expression(1));
             var op = context.GetChild(1).GetText();
 
+            if (op == "<<")
+            {
+                return PType.String;   
+            }
+            
             if (op == ".")
             {
                 if (left == PType.String && right == PType.String) return PType.String;
@@ -99,7 +104,7 @@ namespace pjpproject
 
             if (op == "%" && left == PType.Int && right == PType.Int)
                 return PType.Int;
-            if (AreBothNumeric(left, right))
+            if (AreBothNumeric(left, right)  && op != "%")
                 return PromoteType(left, right);
 
             Errors.ReportError(context.Start, $"Invalid operands for '{op}': {left}, {right}");
@@ -247,5 +252,32 @@ namespace pjpproject
         {
             return Visit(context.expression());
         }
+/*
+        public override PType VisitAdditiveExpr(PLCParser.AdditiveExprContext context)
+        {
+            var left = Visit(context.expression(0));
+            var right = Visit(context.expression(1));
+            var op = context.GetChild(1).GetText();
+
+            if (op == "<<")
+            {
+                return PType.String;   
+            }
+
+            if (op == ".")
+            {
+                return PType.String;
+            }
+
+            if (AreBothNumeric(left, right))
+            {
+                return PromoteType(left, right);
+            }
+
+            Errors.ReportError(context.Start, $"Invalid operands for '{op}': {left}, {right}");
+            return PType.Error;
+        }
+*/
+
     }
 }

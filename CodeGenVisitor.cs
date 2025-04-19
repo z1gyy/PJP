@@ -7,6 +7,7 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
 {
     private readonly Dictionary<string, PType> _symbolTable = new();
     private readonly List<string> _instructions = new();
+    private int _labelCounter = 0;
 
     public List<string> GetInstructions() => _instructions;
 
@@ -27,6 +28,24 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
         PType.String => "\"\"",
         _ => "?"
     };
+
+    private static PType PromoteType(PType a, PType b)
+    {
+        return (a == PType.Float || b == PType.Float) ? PType.Float : PType.Int;
+    }
+
+    private void InsertAfterLastIntPush(string instruction)
+    {
+        for (int i = _instructions.Count - 1; i >= 0; i--)
+        {
+            if (_instructions[i].StartsWith("push I"))
+            {
+                _instructions.Insert(i + 1, instruction);
+                return;
+            }
+        }
+        _instructions.Add(instruction);
+    }
 
     public override PType VisitDeclarationStatement(PLCParser.DeclarationStatementContext context)
     {
@@ -138,9 +157,6 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
             {
                 "+" => $"add {GetTypeCode(PromoteType(leftType, rightType))}",
                 "-" => $"sub {GetTypeCode(PromoteType(leftType, rightType))}",
-                "*" => $"mul {GetTypeCode(PromoteType(leftType, rightType))}",
-                "/" => $"div {GetTypeCode(PromoteType(leftType, rightType))}",
-                "%" => $"mod {GetTypeCode(PromoteType(leftType, rightType))}",
                 _ => "ERROR"
             };
 
@@ -181,8 +197,8 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
 
     public override PType VisitRelationalExpr(PLCParser.RelationalExprContext context)
     {
-        var rightType = Visit(context.expression(1));
         var leftType = Visit(context.expression(0));
+        var rightType = Visit(context.expression(1));
         var op = context.GetChild(1).GetText();
 
         if (leftType == PType.Int && rightType == PType.Float)
@@ -202,26 +218,37 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
         return PType.Bool;
     }
 
-    public override PType VisitEqualityExpr(PLCParser.EqualityExprContext context)
+   public override PType VisitEqualityExpr(PLCParser.EqualityExprContext context)
+{
+    var leftType = Visit(context.expression(0));
+    var rightType = Visit(context.expression(1));
+    var op = context.GetChild(1).GetText();
+
+    if (leftType == PType.Int && rightType == PType.Float)
+        InsertAfterLastIntPush("itof");
+
+    if (leftType == PType.Float && rightType == PType.Int)
+        _instructions.Add("itof");
+
+    var resultType = PromoteType(leftType, rightType);
+
+    // Speciální případ pro porovnání řetězců
+    if (leftType == PType.String && rightType == PType.String)
     {
-        var rightType = Visit(context.expression(1));
-        var leftType = Visit(context.expression(0));
-        var op = context.GetChild(1).GetText();
-
-        if (leftType == PType.Int && rightType == PType.Float)
-            InsertAfterLastIntPush("itof");
-
-        if (leftType == PType.Float && rightType == PType.Int)
-            _instructions.Add("itof");
-
-        var typeCode = GetTypeCode(PromoteType(leftType, rightType));
-        _instructions.Add($"eq {typeCode}");
-
-        if (op == "!=")
-            _instructions.Add("not");
-
-        return PType.Bool;
+        _instructions.Add("eq S");
     }
+    else
+    {
+        var typeCode = GetTypeCode(resultType);
+        _instructions.Add($"eq {typeCode}");
+    }
+
+    if (op == "!=")
+        _instructions.Add("not");
+
+    return PType.Bool;
+}
+
 
     public override PType VisitOrExpr(PLCParser.OrExprContext context)
     {
@@ -297,8 +324,6 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
         return PType.Error;
     }
 
-    private int _labelCounter = 0;
-
     public override PType VisitIfStatement(PLCParser.IfStatementContext context)
     {
         int elseLabel = _labelCounter++;
@@ -337,23 +362,5 @@ public class CodeGenVisitor : PLCBaseVisitor<PType>
         _instructions.Add($"label {endLabel}");
 
         return PType.Error;
-    }
-
-    private static PType PromoteType(PType a, PType b)
-    {
-        return (a == PType.Float || b == PType.Float) ? PType.Float : PType.Int;
-    }
-
-    private void InsertAfterLastIntPush(string instruction)
-    {
-        for (int i = _instructions.Count - 1; i >= 0; i--)
-        {
-            if (_instructions[i].StartsWith("push I"))
-            {
-                _instructions.Insert(i + 1, instruction);
-                return;
-            }
-        }
-        _instructions.Add(instruction);
     }
 }
