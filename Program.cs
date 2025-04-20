@@ -51,7 +51,7 @@ namespace pjpproject
                     {
                         Console.WriteLine("✅ Žádné sémantické chyby");
 
-                        // Zavolání CodeGenVisitor pro generování kódu
+                        // Generování kódu
                         var codeGenVisitor = new CodeGenVisitor();
                         codeGenVisitor.Visit(tree);
                         var instructions = codeGenVisitor.GetInstructions();
@@ -63,9 +63,14 @@ namespace pjpproject
                                 Console.WriteLine(instr);
                         }
 
-                        // Uložení do output.txt
+                        // Uložení instrukcí
                         File.WriteAllLines(outputFileName, instructions);
                         Console.WriteLine($"💾 Kód uložen do souboru: {outputFileName}");
+
+                        // ⬇️ Interpretace instrukcí
+                        Console.WriteLine("🚀 Spouštění interpretu:");
+                        var interpreter = new Interpreter();
+                        interpreter.InterpretFile(outputFileName);
                     }
                 }
             }
